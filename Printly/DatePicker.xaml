@@ -1,0 +1,31 @@
+﻿
+<Window x:Class="Printly.DatePicker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Printly"
+        mc:Ignorable="d"
+        Title="Printly" Height="130" Width="346" WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AppBackground}"
+      Icon="pack://application:,,,/Resources/logo.ico">
+
+    <Grid>
+        <DatePicker  x:Name ="MarkDT" HorizontalAlignment="Left" Margin="13,28,0,0" VerticalAlignment="Top" Width="304" Background="White">
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="Foreground" Value="#111111"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Text" Value="Изберете дата"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Label Content="Изберете дата:" HorizontalAlignment="Left" Margin="13,4,0,0" VerticalAlignment="Top" FontFamily="Impact"/>
+        <Button Content="Избери" HorizontalAlignment="Left" Margin="119,57,0,0" VerticalAlignment="Top" Width="92" Style="{StaticResource MainButtonStyle}" Click="Button_Click"/>
+
+    </Grid>
+</Window>

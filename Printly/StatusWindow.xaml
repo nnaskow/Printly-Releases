@@ -1,0 +1,75 @@
+﻿<Window x:Class="Printly.StatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Printly"
+        mc:Ignorable="d"
+        Background="{StaticResource AppBackground}"
+        Title="Printly" Height="221" Width="537" 
+        Icon="pack://application:,,,/Resources/logo.ico"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryColor" Color="DodgerBlue"/>
+        <SolidColorBrush x:Key="PrimaryHover" Color="CornflowerBlue"/>
+        <SolidColorBrush x:Key="TextColor" Color="#333333"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#DADADA"/>
+        <Style x:Key="MainButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="7"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             CornerRadius="6" Height="33">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource PrimaryHover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Label Content="Текущ статус:" HorizontalAlignment="Left" Margin="44,19,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Image x:Name="dot" HorizontalAlignment="Left" Height="26" Margin="22,25,0,0" VerticalAlignment="Top" Width="22" Source="/Basic_red_dot.png"/>
+        <Label x:Name="currentStatus" Content="*STATUS*" HorizontalAlignment="Left" Margin="172,19,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Red" FontWeight="Bold"/>
+        <TextBox x:Name="statusTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="488" Style="{StaticResource RoundedTextBox}" FontFamily="Segoe Ui" Height="30" Margin="22,0,0,0" FontWeight="Bold" KeyDown="statusTxtBox_KeyDown"/>
+        <Label Content="Нов статус:" HorizontalAlignment="Left" Margin="22,51,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Button x:Name ="changeStatus" Content="Промяна на статус" HorizontalAlignment="Left" Margin="172,130,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="168" Click="changeStatus_Click" />
+        <Separator HorizontalAlignment="Left" Margin="22,125,0,0" VerticalAlignment="Top" Width="484"/>
+        <Separator HorizontalAlignment="Left" Margin="22,52,0,0" VerticalAlignment="Top" Width="484"/>
+
+    </Grid>
+</Window>

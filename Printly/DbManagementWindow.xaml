@@ -1,0 +1,394 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av"
+    x:Class="Printly.DbManagementWindow"
+    Title="Printly" Height="792" Width="1413"
+    Background="{StaticResource AppBackground}"
+    WindowStartupLocation="CenterScreen"
+    Icon="pack://application:,,,/Resources/logo.ico"
+    ResizeMode="CanMinimize">
+
+    <Window.Resources>
+        <Style TargetType="GroupBox" x:Key="StyledGroupBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Border BorderThickness="2" BorderBrush="Black" CornerRadius="8" Background="#F0F4FA" Padding="10" >
+                                <ContentPresenter Margin="0,20,0,0" ContentSource="Content"/>
+                            </Border>
+
+                            <Border Background="DodgerBlue" Padding="6" VerticalAlignment="Top" CornerRadius="5,5,0,0" >
+                                <TextBlock Text="{TemplateBinding Header}" 
+                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           VerticalAlignment="Top"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Key="RotateStoryboard">
+            <DoubleAnimation Storyboard.TargetName="RotateTransform"
+                         Storyboard.TargetProperty="Angle"
+                         From="360" To="0"
+                         Duration="0:0:2"
+                         RepeatBehavior="Forever"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid Width="1393" Height="758" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="292*"/>
+            <ColumnDefinition Width="57*"/>
+        </Grid.ColumnDefinitions>
+        <Image Source="pack://application:,,,/Resources/png/logo.png"
+            HorizontalAlignment="Left"
+            Height="74"
+            Margin="7,7,0,0"
+            VerticalAlignment="Top"
+            Width="64" RenderTransformOrigin="0.544,0.732" MouseLeftButtonDown="Label_MouseDoubleClick" StretchDirection="DownOnly" />
+
+        <Rectangle HorizontalAlignment="Left" Height="0" Margin="527,646,0,0" Stroke="Black" VerticalAlignment="Top" Width="340" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Button x:Name="backButton" Content="Назад" HorizontalAlignment="Left" Margin="14,695,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="86" Click="Button_Click"/>
+
+        <DataGrid x:Name="listOrdersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="-5,83,21,0" Height="600" VerticalAlignment="Top" SelectionChanged="listOrdersDataGrid_SelectionChanged" MouseDoubleClick="listOrdersDataGrid_MouseDoubleClick" IsReadOnly="True" HorizontalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер на поръчка" Binding="{Binding OrderId}" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.Name}"  />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Client.Phone}" />
+                <DataGridTextColumn Header="Артикул" Binding="{Binding Article}" />
+                <DataGridTextColumn Header="Дефект" Binding="{Binding Defect}" />
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" MaxWidth="193"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Дата на приемане" Binding="{Binding DateReceived, StringFormat=dd.MM.yyyy HH:mm}"/>
+                <DataGridTextColumn Header="Комплектовка" Binding="{Binding Accessories}" MaxWidth="130"/>
+                <DataGridCheckBoxColumn Header="Отпечатано"  Binding="{Binding IsPrinted}" IsReadOnly="True" />
+                <DataGridCheckBoxColumn Header="Завършено"  Binding="{Binding IsReadyForSubmission}" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Button x:Name="markButton"
+                HorizontalAlignment="Left"
+                Margin="825,8,0,0"
+                VerticalAlignment="Top"
+                Width="146"
+                Height="88"
+                FontSize="15"
+                Background="DodgerBlue" FontFamily="Impact"
+                Foreground="White" Click="markButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+     Background="{TemplateBinding Background}"
+     BorderBrush="{TemplateBinding BorderBrush}"
+     BorderThickness="{TemplateBinding BorderThickness}"
+     CornerRadius="6"
+     Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+
+
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Отмятане като"/><LineBreak/><Run Text="предадено"/></TextBlock>
+        </Button>
+        <Button x:Name="printButton" Content="Принтиране на бележка" HorizontalAlignment="Left" Margin="716,695,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="207" Click="printButton_Click" />
+        <Label x:Name="listOfOrdersLabel" Content="Списък с непредадени поръчки"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="20"
+            FontFamily="Britannic Bold"
+            FontStyle="Italic"
+            Foreground="Black"
+            Margin="39,52,0,0" Height="45" Width="336" FontWeight="Bold"/>
+        <DataGrid x:Name="listFinishedOrdersDG" AutoGenerateColumns="False" CanUserAddRows="False" Margin="-5,83,16,75" Visibility="Hidden" SelectionChanged="listFinishedOrdersDG_SelectionChanged" MouseDoubleClick="listFinishedOrdersDG_MouseDoubleClick" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер на поръчка" Binding="{Binding OrderId}" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.Name}" />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Client.Phone}" MaxWidth="73" />
+                <DataGridTextColumn Header="Артикул" Binding="{Binding Article}" />
+                <DataGridTextColumn Header="Дефект" Binding="{Binding Defect}" />
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" MaxWidth="193"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" MaxWidth="43"/>
+                <DataGridTextColumn Header="Дата на приемане" Binding="{Binding DateReceived, StringFormat=dd.MM.yyyy HH:mm}" MaxWidth="96"/>
+                <DataGridTextColumn Header="Дата на предаване" Binding="{Binding IsSubmissed, StringFormat=dd.MM.yyyy HH:mm}" MaxWidth="96"/>
+                <DataGridTextColumn Header="Комплектовка" Binding="{Binding Accessories}" MinWidth ="119" MaxWidth="145" />
+                <DataGridCheckBoxColumn Header="Отпечатано" Binding="{Binding IsPrinted, Mode=TwoWay}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="finishedOrdersButton"
+            HorizontalAlignment="Left"
+            Margin="998,7,0,0"
+            VerticalAlignment="Top"
+            Width="146"
+            Height="90"
+            FontSize="15"
+            Background="DodgerBlue" FontFamily="Impact"
+            Foreground="White" Click="finishedUnfinishedOrdersButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="6"
+                Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+
+
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Предадени"/><LineBreak/><Run Text="поръчки"/></TextBlock>
+        </Button>
+        <Button x:Name="unfinishedOrdersButton"
+            HorizontalAlignment="Left"
+            Margin="998,7,0,0"
+            VerticalAlignment="Top"
+            Width="146"
+            Height="89"
+            FontSize="15"
+            Background="DodgerBlue"  FontFamily="Impact"
+            Foreground="White" Visibility="Hidden" Click="finishedUnfinishedOrdersButton_Copy_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+     Background="{TemplateBinding Background}"
+     BorderBrush="{TemplateBinding BorderBrush}"
+     BorderThickness="{TemplateBinding BorderThickness}"
+     CornerRadius="6"
+     Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+
+
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Непредадени"/><LineBreak/><Run Text="поръчки"/></TextBlock>
+        </Button>
+        <Button x:Name="deleteButton" Content="Изтриване на поръчка" HorizontalAlignment="Left" Margin="946,695,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="198" Click="deleteButton_Click" />
+        <Label Content="" HorizontalAlignment="Left" Margin="836,454,0,0" VerticalAlignment="Top" FontFamily="Impact" FontSize="20"/>
+        <GroupBox Header="Търсене на поръчка" Style="{StaticResource StyledGroupBox}" Margin="1154,8,5,466" Grid.ColumnSpan="2">
+            <StackPanel Margin="-9,0,-6,-7">
+                <Separator Height="4" RenderTransformOrigin="0.504,0.477" Width="222"/>
+                <Label Content="Име на клиент:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name ="searchClientNameTxtBox" TextWrapping="Wrap" Text="" Width="225" Style="{StaticResource RoundedTextBox}" KeyDown="searchClientNameTxtBox_KeyDown"  HorizontalAlignment="Left" TextChanged="searchClientNameTxtBox_TextChanged"/>
+                <Label Content="Телефонен номер:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name ="searchClientPhoneTxtBox" TextWrapping="Wrap" Text="" Width="226" Style="{StaticResource RoundedTextBox}" KeyDown="searchClientPhoneTxtBox_KeyDown" HorizontalAlignment="Left" TextChanged="searchClientPhoneTxtBox_TextChanged"/>
+                <Label Content="Артикул:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="searchClienntItemTxtBox" TextWrapping="Wrap" Text="" Width="227"  HorizontalAlignment="Left" Style="{StaticResource RoundedTextBox}" KeyDown="searchClienntItemTxtBox_KeyDown" TextChanged="searchClienntItemTxtBox_TextChanged"/>
+                <Separator Height="12" Visibility="Hidden"/>
+                <Button 
+    Width="139" Height="53" 
+    Click="Button_Click_2"
+    Style="{StaticResource MainButtonStyle}">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="6"
+                    Height="51"
+                    Padding="5">
+                                <ContentPresenter 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+
+                    <TextBlock TextAlignment="Center" 
+               TextWrapping="Wrap" 
+               FontFamily="Segoe UI" 
+               FontWeight="Bold">
+        <Run Text="Изчистване"/>
+        <LineBreak/>
+        <Run Text="на търсенето"/>
+                    </TextBlock>
+                </Button>
+
+
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Редактиране на поръчка" Style="{StaticResource StyledGroupBox}" Margin="1154,297,5,10" Grid.ColumnSpan="2">
+            <StackPanel Margin="-7,0,-7,-9">
+                <Separator Height="4" RenderTransformOrigin="0.504,0.477" Width="222" Margin="0,10,0,0"/>
+                <Label Content="Име на клиент:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="newNameTxtBox" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="newNameTxtBox_KeyDown" TextWrapping="NoWrap"/>
+                <Label Content="Телефонен номер:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="newPhoneTxtBox" TextWrapping="NoWrap" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="newPhoneTxtBox_KeyDown"/>
+                <Label Content="Артикул:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="newItemTxtBox" TextWrapping="NoWrap" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="newItemTxtBox_KeyDown"/>
+                <Label Content="Дефект:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="newDefectTxtBox" TextWrapping="NoWrap" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="newDefectTxtBox_KeyDown"/>
+                <Label Content="Описание:" FontFamily="Impact" FontSize="14"/>
+                <ScrollViewer MaxHeight="33">
+                    <TextBox x:Name="descriptionTxtBox" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="descriptionTxtBox_KeyDown"/>
+                </ScrollViewer>
+                <Label Content="Цена:" FontFamily="Impact" FontSize="14" />
+                <TextBox x:Name="newPriceTxtBox" TextWrapping="NoWrap" Text="" Width="224" Style="{StaticResource RoundedTextBox}" KeyDown="newPriceTxtBox_KeyDown"/>
+                <Separator Height="4" RenderTransformOrigin="0.504,0.477" Width="222" Visibility="Visible"/>
+                <StackPanel x:Name ="HorizontalStackPanel" Orientation="Horizontal" Height="25" Width="220">
+                    <Button x:Name ="editAddons" Content="📦" Width="42" Style="{StaticResource SmallButtonStyle}" Height="26" Click="editAddons_Click" ToolTip="Промяна на комплектовка"/>
+                    <Button x:Name ="statusButton" Content="📢" Width="42" Style="{StaticResource SmallButtonStyle}" Height="26" Click="statusButton_Click" ToolTip="Статус"/>
+                    <Button x:Name ="editDateOfAcceptance" Content="📥" Width="42" Style="{StaticResource SmallButtonStyle}" Height="26" Click="editDateOfAcceptance_Click" ToolTip="Промяна на дата на приемане"/>
+                    <Button x:Name ="editDateofSubmission" Content="📤" Width="42" Style="{StaticResource SmallButtonStyle}" Height="26" Click="editDateofSubmission_Click" Visibility="Hidden" ToolTip="Промяна на дата на предаване"/>
+                </StackPanel>
+                <Separator Height="4" RenderTransformOrigin="0.504,0.477" Width="222" Visibility="Visible"/>
+                <Button x:Name ="editButton" Content="Редактирай" Width="104" Style="{StaticResource MainButtonStyle}" Height="39" Click="editButton_Click" />
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="unmarkButton"
+            HorizontalAlignment="Left"
+            Margin="819,8,0,0"
+            VerticalAlignment="Top"
+            Width="146"
+            Height="88"
+            FontSize="15"
+            Background="DodgerBlue" FontFamily="Impact"
+            Foreground="White" Click="unmarkButton_Click"
+                Visibility="Hidden">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6"
+                        Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+
+
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Отмятане като"/><LineBreak/><Run Text="непредадено"/></TextBlock>
+        </Button>
+        <Button x:Name="isReadyForSubmissionButton"
+            HorizontalAlignment="Left"
+            Margin="653,8,0,0"
+            VerticalAlignment="Top"
+            Width="146"
+            Height="88"
+            FontSize="15"
+            Background="DodgerBlue" FontFamily="Impact"
+            Foreground="White" Click="isReadyForSubmissionButton_Click" >
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6"
+                        Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+
+
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Отмятане като"/><LineBreak/><Run Text="завършено"/></TextBlock>
+        </Button>
+        <Button x:Name="unReadyForSubmissionButton"
+            HorizontalAlignment="Left"
+            Margin="653,8,0,0"
+            VerticalAlignment="Top"
+            Width="146"
+            Height="88"
+            FontSize="15"
+            Background="Blue" FontFamily="Impact"
+            Foreground="White" Visibility="Hidden" Click="unReadyForSubmissionButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6"
+                        Height="45">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+            <TextBlock TextAlignment="Center" TextWrapping="Wrap" FontFamily="Segoe UI" FontWeight="Bold"><Run Text="Отмятане като"/><LineBreak/><Run Text="незавършено"/></TextBlock>
+        </Button>
+
+        <Button x:Name="openSqlDatabase" Content="Отвори базата данни" HorizontalAlignment="Left" Margin="491,695,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="198" Click="openSqlDatabase_Click" />
+        <Grid x:Name="LoadingOverlay" Background="#AAFFFFFF" Visibility="Collapsed">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <!-- Rotating image -->
+                <Image x:Name="RotatingImage" Source="pack://application:,,,/Resources/png/img1.png"
+               Width="90" Height="100"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <RotateTransform x:Name="RotateTransform" Angle="0"/>
+                    </Image.RenderTransform>
+                </Image>
+
+
+                <TextBlock Text="Зареждане..." 
+                       HorizontalAlignment="Left" 
+                       Margin="10,100,0,-89"
+                       FontSize="16" 
+                       FontWeight="Bold"
+                       Foreground="Black"/>
+            </Grid>
+        </Grid>
+        <Separator RenderTransformOrigin="0.504,0.477" Visibility="Visible" Margin="68,52,828,702"/>
+        <Button x:Name ="developerModeLogInButton" Content="👤" Style="{StaticResource SmallButtonStyle}" Click="developerModeLogInButton_Click" ToolTip="Вход като Developer" Margin="73,26,1049,706"/>
+        <Button x:Name ="settingsButton" Content="⚙️" Style="{StaticResource SmallButtonStyle}" Click="settingsButton_Click" ToolTip="Настройки" Margin="118,26,999,706" IsEnabled="False" Opacity="0.375"/>
+        <Button x:Name ="checkForUpdatesButton" Content="🔄" Style="{StaticResource SmallButtonStyle}" Click="checkForUpdatesButton_Click" ToolTip="Проверка за обновления" Margin="171,26,945,706" IsEnabled="False"/>
+        <Button x:Name ="aboutButton" Content="❓" Style="{StaticResource SmallButtonStyle}" Click="aboutButton_Click" ToolTip="Относно програмата" Margin="225,26,889,706" IsEnabled="True"/>
+        <Button x:Name="openLogsButton" Content="Отвори всички логове" HorizontalAlignment="Left" Margin="268,695,0,0" VerticalAlignment="Top" Style="{StaticResource MainButtonStyle}" Width="198" Click="openLogsButton_Click" IsEnabled="False" />
+
+    </Grid>
+</Window>

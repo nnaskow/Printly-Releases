@@ -1,0 +1,30 @@
+﻿<Window x:Class="Printly.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Printly"
+        mc:Ignorable="d"
+        Title="Относно Printly"
+        Height="450" Width="800"
+        Background="{StaticResource AppBackground}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Icon="pack://application:,,,/Resources/logo.ico">
+    <Grid>
+        <Rectangle HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Width="780" Height="414"
+                   Stroke="Black" StrokeThickness="2"
+                   RadiusX="12" RadiusY="12"
+                   Fill="White"/>
+        <Image Margin="78,16,68,37" Source="pack://application:,,,/Resources/png/nxcutout.png"/>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="©2025 Printly. Всички права запазени." FontSize="14" Foreground="{StaticResource TextColor}" Margin="257,367,257,47" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Text="Разработено от NYXON" FontSize="16" Foreground="{StaticResource TextColor}" Margin="303,300,303,110" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock x:Name ="printlyVersion" Text="Printly v1.11" FontSize="24" FontWeight="Bold" Foreground="{StaticResource PrimaryColor}" TextAlignment="Center" Margin="290,62,280,336"/>
+        <TextBlock Text="nyxonstudios@gmail.com" FontSize="16" Foreground="{StaticResource TextColor}" Margin="296,329,296,81" TextAlignment="Center" FontWeight="Bold" FontStyle="Italic"/>
+        <Separator HorizontalAlignment="Center" Margin="0,352,0,0" VerticalAlignment="Top" Width="194"/>
+    </Grid>
+</Window>
+

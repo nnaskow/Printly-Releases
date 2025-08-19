@@ -1,0 +1,181 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="Printly.MainWindow"
+        Title="Printly" Height="741" Width="444"
+        Background="{StaticResource AppBackground}"
+        WindowStartupLocation="CenterScreen"
+    ResizeMode="CanMinimize"
+    Icon="pack://application:,,,/Resources/logo.ico">
+    <Grid>
+        <!-- Заглавие -->
+
+        <!-- Име -->
+        <Label Content="*Име на клиент:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="17,94,0,0"/>
+        <TextBox x:Name="customerName" Style="{StaticResource RoundedTextBox}"
+             Width="396"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="17,119,0,0"
+             KeyDown="customerName_KeyDown" TextChanged="customerName_TextChanged" TextWrapping="NoWrap" Height="32"/>
+
+        <!-- Телефон -->
+        <Label Content="*Телефон:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="17,152,0,0"/>
+        <TextBox x:Name="phoneNumber" Style="{StaticResource RoundedTextBox}"
+             Width="396"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="17,177,0,0"
+             KeyDown="phoneNumber_KeyDown"  TextWrapping="NoWrap" TextChanged="phoneNumber_TextChanged" Height="32"/>
+
+        <!-- Артикул -->
+        <Label Content="*Артикул:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="17,213,0,0"/>
+        <TextBox x:Name="itemTextBox" Style="{StaticResource RoundedTextBox}" MaxLength="13" Height="32"
+             Width="396"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="17,238,0,0"
+             KeyDown="itemTextBox_KeyDown"  TextWrapping="NoWrap"/>
+
+        <!-- Дефект -->
+        <Label Content="Дефект:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="19,269,0,0"/>
+        <TextBox x:Name="defectTxtBox" Style="{StaticResource RoundedTextBox}" TextChanged="defectTxtBox_TextChanged" ToolTipService.IsEnabled="True" Height="32"
+             Width="396"
+             TextWrapping="NoWrap"
+             AcceptsReturn="True"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="19,295,0,0"
+             KeyDown="defectTxtBox_KeyDown"/>
+
+        <!-- Дата -->
+        <Label Content="Дата на приемане:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="225,432,0,0" />
+        <DatePicker x:Name="dateDTP"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="225,458,0,0"
+            Width="188"
+            Height="32"
+            FontFamily="Impact"
+            FontStyle="Italic"
+            SelectedDateFormat="Long"
+            Background="White"
+            Foreground="#111111"
+            HorizontalContentAlignment="Left"
+            VerticalContentAlignment="Center">
+            <DatePicker.Resources>
+                <!-- Закръглени краища -->
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="8"/>
+                    <Setter Property="Background" Value="#E3EBF5"/>
+                </Style>
+
+                <!-- Placeholder чрез DatePickerTextBox -->
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="Foreground" Value="#111111"/>
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Text" Value="Изберете дата"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+
+
+
+
+
+        <!-- Цена -->
+        <Label Content="Цена:"
+           FontSize="16"
+           FontFamily="Impact"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="17,432,0,0"/>
+        <TextBox x:Name="priceTxtBox" Style="{StaticResource RoundedTextBox}" Height="32"
+             Width="183"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Margin="17,458,0,0"  TextWrapping="NoWrap"/>
+
+        <!-- Бутон -->
+        <Button x:Name="addToDBButton" Content="Приемане на поръчка"
+            Style="{StaticResource MainButtonStyle}"
+            Width="202"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="114,594,0,0" Height="50" Click="addToDBButton_Click"/>
+        <Image Source="pack://application:,,,/Resources/png/printly.png"
+       HorizontalAlignment="Left"
+       Height="107"
+       Margin="122,0,0,0"
+       VerticalAlignment="Top"
+       Width="178" RenderTransformOrigin="0.544,0.732" Stretch="UniformToFill" StretchDirection="DownOnly"/>
+        <Button x:Name="dbManagement" Content="Управление на поръчки"
+            Style="{StaticResource MainButtonStyle}"
+            Width="202"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="114,643,0,0" Height="50" Click="dbManagement_Click"/>
+        <Label Content="Комплектовка" HorizontalAlignment="Left" Margin="17,493,0,0" VerticalAlignment="Top" FontFamily="Impact" FontSize="16"/>
+        <CheckBox x:Name="caseCheckBox" Content="Калъф" HorizontalAlignment="Left" Margin="21,525,0,0" VerticalAlignment="Top" FontSize="15" FontFamily="Impact"/>
+        <CheckBox x:Name="chargerCheckBox" Content="Зарядно" HorizontalAlignment="Left" Margin="101,525,0,0" VerticalAlignment="Top" FontSize="15" FontFamily="Impact"/>
+        <CheckBox x:Name ="bagCheckBox"  Content="Чанта" HorizontalAlignment="Left" Margin="188,525,0,0" VerticalAlignment="Top" FontSize="15" FontFamily="Impact"/>
+        <CheckBox x:Name ="adapterCheckBox" Content="Адаптер" HorizontalAlignment="Left" Margin="262,525,0,0" VerticalAlignment="Top" FontSize="15" FontFamily="Impact"/>
+        <CheckBox x:Name ="othersCheckBox" Content="Друго" HorizontalAlignment="Left" Margin="348,525,0,0" VerticalAlignment="Top" FontSize="15" FontFamily="Impact" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <TextBox x:Name="otherTxtBox" Style="{StaticResource RoundedTextBox}" Height="32"
+            Width="396"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="17,552,0,0"
+             Visibility="Visible"  TextWrapping="NoWrap"/>
+        <Separator HorizontalAlignment="Left" Margin="21,518,0,0" VerticalAlignment="Top" Width="145"/>
+        <Separator HorizontalAlignment="Left" Margin="21,546,0,0" VerticalAlignment="Top" Width="263"/>
+        <Label Content="Описание:" HorizontalAlignment="Left" Margin="21,332,0,0" VerticalAlignment="Top" FontFamily="Impact" FontSize="16"/>
+        <TextBox x:Name="descriptionTxtBox" Style="{StaticResource RoundedTextBox}"
+            Width="396"
+            TextWrapping="NoWrap"
+            AcceptsReturn="True"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="19,362,0,0"
+            KeyDown="defectTxtBox_KeyDown" Height="64"/>
+        <Button x:Name="searchClientInDB"  Content="🔍" HorizontalAlignment="Left" Margin="375,175,0,0" VerticalAlignment="Top" Height="34" Click="searchClientInDB_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="00,8,8,00" Width="38" Margin="0,2,0,0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>

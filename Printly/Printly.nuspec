@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Printly</id>
+    <version>1.1.0</version>
+    <title>Printly</title>
+    <authors>NYXON</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl>
+    <description>Printly desktop WPF application</description>
+    <releaseNotes>First packaged release.</releaseNotes>
+    <copyright>2025 NYXON</copyright>
+    <tags>wpf printly</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\net8.0-windows\**\*.*" target="lib\net8.0-windows" />
+  </files>
+</package>
